@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const Pusher =require('pusher');
 const mongoose = require('mongoose');
 const uriUtil = require('mongodb-uri');
 const checkAuth = require('../middleware/check-auth');
@@ -28,6 +29,15 @@ const upload = multer({storage:storage,limit:{
 fileFilter:fileFilter
 }); 
 
+
+var pusher = new Pusher({
+    appId: '947043',
+    key: '6384e05eafa2609b7f1e',
+    secret: 'f2453bf8c62751ecc148',
+    cluster: 'ap4',
+    encrypted: true
+  });
+  
 
 //multer to here
 
@@ -96,7 +106,7 @@ router.get('/',(req,res,next)=>{
     }
     console.log(arr);
 
-
+//
 
     const teacher = new Teacher({
         _id: new mongoose.Types.ObjectId(),
@@ -108,10 +118,10 @@ router.get('/',(req,res,next)=>{
     teacher.save()
     .then((teacherData)=>{
         console.log(teacherData);
-        res.status(201).json({
-            message:'New Profile created',
+        res.status(201).json(pusher.trigger('bsea-channel','bsea-event',{
+            message:'New teacher created',
             createdTeacher:teacherData
-           });
+           }));
     })
     .catch(err=>{
         console.log(err);
@@ -181,5 +191,43 @@ router.delete('/:memberId',(req,res,next)=>{
     });
    });
 
+
+   /**
+    
+//add a new alumni route
+  // router.post('/',upload.array("uploads[]",12),(req,res,next)=>{
+   router.post('/',upload.array('avatarImage',5),(req,res,next)=>{
+    
+    var arr = [];
+    for (var i = 0; i < req.files.length; ++i) {
+      arr.push('http://localhost:3000/'+req.files[i].path);
+    }
+    console.log(arr);
+
+
+
+    const teacher = new Teacher({
+        _id: new mongoose.Types.ObjectId(),
+        name: req.body.name,
+        description:req.body.description,
+        avatarImage:arr
+
+    }); 
+    teacher.save()
+    .then((teacherData)=>{
+        console.log(teacherData);
+        res.status(201).json({
+            message:'New Profile created',
+            createdTeacher:teacherData
+           });
+    })
+    .catch(err=>{
+        console.log(err);
+        res.status(500).json({error:err});
+    });
+
+
+});
+    */
 
 module.exports = router;

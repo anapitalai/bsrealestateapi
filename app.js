@@ -11,7 +11,7 @@ const professionalRoutes = require('./api/routes/professionals');
 const userRoutes = require('./api/routes/users');
 
 
-const mongodbUri ="mongodb://localhost/ralikutest";
+const mongodbUri ="mongodb://localhost/bismarksea";
 
 const mongooseUri = uriUtil.formatMongoose(mongodbUri);
 const dbOptions = {};

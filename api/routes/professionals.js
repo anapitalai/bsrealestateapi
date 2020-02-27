@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const Pusher =require('pusher');
 const mongoose = require('mongoose');
 const uriUtil = require('mongodb-uri');
-//const checkAuth = require('../middleware/check-auth');
+
 
 
 const Professionals = require('../models/professionals.model');
@@ -99,14 +100,24 @@ router.get('/',(req,res,next)=>{
     });
    });
 
+
+//pushe
+var pusher = new Pusher({
+    appId: '947043',
+    key: '6384e05eafa2609b7f1e',
+    secret: 'f2453bf8c62751ecc148',
+    cluster: 'ap4',
+    encrypted: true
+  });
+  
+
 //add a new alumni route
 router.post('/',upload.array('images',5),(req,res,next)=>{
 
     var arr = [];
     for (var i = 0; i < req.files.length; ++i) {
-      arr.push('http://localhost:3007/'+req.files[i].path );
-    }
-    ;
+      arr.push('http://localhost:3000/'+req.files[i].path );
+    };
 
     const professional = new Professionals({
         _id: new mongoose.Types.ObjectId(),
@@ -118,15 +129,18 @@ router.post('/',upload.array('images',5),(req,res,next)=>{
     .save()
     .then((professionalData)=>{
         console.log(professionalData);
-        res.status(201).json({
-            message:'New Professional Details created',
+        res.status(201).json(pusher.trigger('bsea-channel','bsea-event',{
+            message:'New Property Details created',
             createdTeacher:professionalData
-           });
+           }));
     })
     .catch(err=>{
         console.log(err);
         res.status(500).json({error:err});
     });
+
+
+
 
 
 });
