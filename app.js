@@ -7,9 +7,9 @@ const uriUtil = require('mongodb-uri');
 
 //routes
 const alumniRoutes = require('./api/routes/teachers');
-const professionalRoutes = require('./api/routes/professionals');
+const feedbackRoutes = require('./api/routes/feedback');
 const userRoutes = require('./api/routes/users');
-
+//
 
 const mongodbUri ="mongodb://localhost/bismarksea";
 
@@ -28,7 +28,6 @@ const app = express();
 app.use(morgan('dev'));
 app.use('/uploads', express.static('uploads')); //added sly
 app.use('/avatars', express.static('avatars')); //added sly
-app.use('/stationery', express.static('stationery')); //added sly
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
@@ -45,7 +44,7 @@ app.use(function (req, res, next) {
 
 app.use('/teachers', alumniRoutes);
 app.use('/users', userRoutes);
-app.use('/professionals', professionalRoutes);
+app.use('/feedbacks', feedbackRoutes);
 app.use((req, res, next) => {
   const error = new Error("Not found");
   error.status = 404;

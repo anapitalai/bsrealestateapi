@@ -1,16 +1,16 @@
 const mongoose = require('mongoose');
 
-const professionalSchema = mongoose.Schema({
+const feedbackSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
     name:{type:String,required:true},
-    description:{type:String,required:true},
-    images:{type:Array,required:false},
+    contacts:{type:String,required:true},
+    message:{type:String,required:true},
     createdAt:Date,
     updatedAt:Date
 
 });
 
-professionalSchema.pre('save', function(next) {
+feedbackSchema.pre('save', function(next) {
     
     var currentDate = new Date();
     
@@ -23,4 +23,4 @@ professionalSchema.pre('save', function(next) {
     });
     
 
-module.exports = mongoose.model('Professional',professionalSchema);
+module.exports = mongoose.model('Feedback',feedbackSchema);

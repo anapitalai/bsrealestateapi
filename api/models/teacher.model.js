@@ -3,7 +3,10 @@ const mongoose = require('mongoose');
 
 const teacherSchema = mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    name:{type: String,required:true},
+    location:{type: String,required:true},
+    price:{type: String,required:true},
+    status:{type: String,required:true},
+    type:{type: String,required:true},
     description:{type:String,required:true},
     avatarImage:{type:Array,required:true}
  

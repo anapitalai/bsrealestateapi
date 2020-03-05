@@ -48,7 +48,7 @@ const Teacher = require('../models/teacher.model');
 //get all alumni routes
 router.get('/',(req,res,next)=>{
  Teacher.find()
- .select('_id  name description avatarImage createdAt updatedAt')
+ .select('_id  location price status type description avatarImage createdAt updatedAt')
  .exec()
  .then(doc=>{
  
@@ -65,7 +65,10 @@ router.get('/',(req,res,next)=>{
             
             return {
                 id:docs._id,
-                name:docs.name,
+                location:docs.location,
+                price:docs.price,
+                status:docs.status,
+                price:docs.price,
                 description:docs.description,
                 singleViewImages:docs.avatarImage,
                 updatedAt:doc.updatedAt,
@@ -98,7 +101,7 @@ router.get('/',(req,res,next)=>{
 
 //add a new alumni route
   // router.post('/',upload.array("uploads[]",12),(req,res,next)=>{
-   router.post('/',upload.array('avatarImage',5),(req,res,next)=>{
+   router.post('/',upload.array('avatarImage',3),(req,res,next)=>{
     
     var arr = [];
     for (var i = 0; i < req.files.length; ++i) {
@@ -110,7 +113,10 @@ router.get('/',(req,res,next)=>{
 
     const teacher = new Teacher({
         _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
+        location: req.body.location,
+        price: req.body.price,
+        status: req.body.status,
+        type: req.body.type,
         description:req.body.description,
         avatarImage:arr
 
@@ -137,7 +143,7 @@ router.get('/',(req,res,next)=>{
 router.get('/:memberId',(req,res,next)=>{
     const id=req.params.memberId;
     Teacher.findById(id)
-    .select('_id name description avatarImage')
+    .select('_id location price status type description avatarImage')
     .exec()
     .then(doc=>{
        console.log('From DB',doc);
@@ -191,43 +197,5 @@ router.delete('/:memberId',(req,res,next)=>{
     });
    });
 
-
-   /**
-    
-//add a new alumni route
-  // router.post('/',upload.array("uploads[]",12),(req,res,next)=>{
-   router.post('/',upload.array('avatarImage',5),(req,res,next)=>{
-    
-    var arr = [];
-    for (var i = 0; i < req.files.length; ++i) {
-      arr.push('http://localhost:3000/'+req.files[i].path);
-    }
-    console.log(arr);
-
-
-
-    const teacher = new Teacher({
-        _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
-        description:req.body.description,
-        avatarImage:arr
-
-    }); 
-    teacher.save()
-    .then((teacherData)=>{
-        console.log(teacherData);
-        res.status(201).json({
-            message:'New Profile created',
-            createdTeacher:teacherData
-           });
-    })
-    .catch(err=>{
-        console.log(err);
-        res.status(500).json({error:err});
-    });
-
-
-});
-    */
 
 module.exports = router;
