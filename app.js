@@ -9,7 +9,8 @@ const uriUtil = require('mongodb-uri');
 const alumniRoutes = require('./api/routes/teachers');
 const feedbackRoutes = require('./api/routes/feedback');
 const userRoutes = require('./api/routes/users');
-//
+const emailRoutes = require('./api/routes/emails');
+
 
 const mongodbUri ="mongodb://bismarksea:bismarksea@localhost:27017/bismarksea";
 
@@ -43,6 +44,7 @@ app.use(function (req, res, next) {
 
 
 app.use('/teachers', alumniRoutes);
+app.use('/emails', emailRoutes);
 app.use('/users', userRoutes);
 app.use('/feedbacks', feedbackRoutes);
 app.use((req, res, next) => {
