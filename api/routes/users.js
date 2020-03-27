@@ -68,7 +68,7 @@ router.post('/signup',upload.single('avatar'),(req,res,next)=>{
         }else{
             const user = new User({
                 _id: new mongoose.Types.ObjectId(),
-                avatar:'http://localhost:3000/'+req.file.path,
+                avatar:'http://chervicontraining.com:3006'+req.file.path,
                 email: req.body.email,
                 password:hash,
                 

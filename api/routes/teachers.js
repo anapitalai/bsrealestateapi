@@ -76,7 +76,7 @@ router.get('/',(req,res,next)=>{
                 listViewImage:docs.avatarImage[0],
             request:{
               type:'GET',
-              url:'http://localhost:3000/teachers/' + docs._id
+              url:'http://chervicontraining.com:3006/teachers/' + docs._id
             },
             
             requestAvatar:{
@@ -105,7 +105,7 @@ router.get('/',(req,res,next)=>{
     
     var arr = [];
     for (var i = 0; i < req.files.length; ++i) {
-      arr.push('http://localhost:3000/'+req.files[i].path);
+      arr.push('http://ichervicontraining.com:3006/'+req.files[i].path);
     }
     console.log(arr);
 
